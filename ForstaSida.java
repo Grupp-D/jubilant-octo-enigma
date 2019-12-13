@@ -2,6 +2,9 @@ package FFS;
 
 import com.sun.javafx.scene.layout.region.BorderImageWidthConverter;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -61,7 +64,6 @@ public class ForstaSida extends Application {
         button.setPrefHeight(30);
         button.setTextFill(Color.GREEN);
         button.setFont(Font.font(20));
-        //button.setStyle("-fx-background-color: blue;");
         button.setStyle("-fx-border-color: green;");
         button.setStyle("-fx-border-width: 10 20 20 10;");
 
@@ -74,9 +76,40 @@ public class ForstaSida extends Application {
         button2.setPrefWidth(150);
         button2.setTextFill(Color.GREEN);
         button2.setFont(Font.font(20));
-        //button.setStyle("-fx-background-color: blue;");
         button2.setStyle("-fx-border-color: green;");
         button2.setStyle("-fx-border-width: 10 20 20 10;");
+
+        button2.setOnAction(e-> {
+            GridPane pane = new GridPane();
+            pane.setAlignment(Pos.CENTER);
+            pane.setPadding(new Insets(11.5, 12.5, 13.5, 14.4));
+            pane.setHgap(5.5);
+            pane.setVgap(5.5);
+            pane.add(new Label("Användarnamn:"), 0, 0);
+            final TextField username = new TextField();
+            pane.add(username, 1, 0);
+            pane.add(new Label("Lösenord:"), 0, 1);
+            final PasswordField password = new PasswordField();
+            pane.add(password, 1, 1);
+            final Label result = new Label();
+            pane.add(result, 0, 2);
+            Button testLogin = new Button("Login");
+            pane.add(testLogin, 1, 2);
+            GridPane.setHalignment(testLogin, HPos.RIGHT);
+            Button regestrering = new Button("Registrera");
+            pane.add(regestrering,1,2);
+            GridPane.setHalignment(regestrering, HPos.LEFT);
+            testLogin.setOnAction(eee -> {
+                if(username.getText().equals("ab111cd@student.lnu.se"))
+                    result.setText("OK");
+                else
+                    result.setText("No way");
+            });
+            Scene scene = new Scene(pane);
+            Stage window = new Stage();
+            window.setScene(scene);
+            window.showAndWait();
+        });
 
         Button button3= new Button();
         button3.setText("Hem");
@@ -114,7 +147,6 @@ public class ForstaSida extends Application {
         flowPane.setLayoutX(930);
         flowPane.setLayoutY(140);
         flowPane.setVgap(50);
-        //button2.setMinWidth(flowPane.getPrefWidth());
         flowPane.setAlignment(Pos.CENTER); //centrerar knapparna
 
         HBox hBox = new HBox();
@@ -122,8 +154,6 @@ public class ForstaSida extends Application {
         hBox.setLayoutY(150);
         TextField sokRuta = new TextField("Skriv in sökord här...");
         sokRuta.setPrefWidth(350);
-        //sokRuta.setLayoutX(700);
-        //sokRuta.setLayoutY(150);
         hBox.getChildren().add(sokRuta);
 
 
