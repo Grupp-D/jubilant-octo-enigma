@@ -11,8 +11,10 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.FileInputStream;
 
 public class ForstaSidaInloggad extends Application {
@@ -61,7 +63,6 @@ public class ForstaSidaInloggad extends Application {
         button.setPrefHeight(30);
         button.setTextFill(Color.GREEN);
         button.setFont(Font.font(20));
-        //button.setStyle("-fx-background-color: blue;");
         button.setStyle("-fx-border-color: green;");
         button.setStyle("-fx-border-width: 10 20 20 10;");
 
@@ -74,7 +75,6 @@ public class ForstaSidaInloggad extends Application {
         button2.setPrefWidth(200);
         button2.setTextFill(Color.GREEN);
         button2.setFont(Font.font(20));
-        //button.setStyle("-fx-background-color: blue;");
         button2.setStyle("-fx-border-color: green;");
         button2.setStyle("-fx-border-width: 10 20 20 10;");
 
@@ -87,7 +87,6 @@ public class ForstaSidaInloggad extends Application {
         button3.setPrefWidth(120);
         button3.setTextFill(Color.GREEN);
         button3.setFont(Font.font(20));
-        //button.setStyle("-fx-background-color: blue;");
         button3.setStyle("-fx-border-color: blue;");
         button3.setStyle("-fx-border-width: 10 20 20 10;");
 
@@ -101,6 +100,81 @@ public class ForstaSidaInloggad extends Application {
         button4.setFont(Font.font(11));
         button4.setStyle("-fx-border-color: blue;");
         button4.setStyle("-fx-border-width: 10 20 20 10;");
+
+        button2.setOnAction(eh -> {
+            HBox hbox = new HBox();
+            hbox.setPadding(new Insets(5));
+
+            VBox vbox = new VBox();
+            vbox.setSpacing(2);
+
+            Label rubrikRecept = new Label("Rubrik");
+            TextField textFieldRubrik = new TextField();
+            textFieldRubrik.setPrefWidth(380);
+
+            Label ingredienser = new Label("Ingredienser");
+            TextArea textAreaIngredienser = new TextArea();
+            textAreaIngredienser.setMaxSize(200, 200);
+
+            VBox sk = new VBox();
+            Label specialkost = new Label("Allergier/Specialkost");
+            CheckBox laktosfritt = new CheckBox("Laktosfritt");
+            CheckBox glutenfritt = new CheckBox("Glutenfritt");
+            CheckBox vegetariskt = new CheckBox("Vegetariskt");
+            sk.getChildren().addAll(specialkost, laktosfritt, glutenfritt, vegetariskt);
+            sk.setTranslateX(-170);
+            sk.setTranslateY(467);
+
+            Label beskrivning = new Label("Beskrivning");
+            Label angeVart = new Label("Glöm inte berätta vart du köpt dina varor!");
+            angeVart.setFont(Font.font("Times new roman", FontPosture.ITALIC, 12));
+            TextArea textFieldBeskrivning = new TextArea();
+            textFieldBeskrivning.setMaxSize(380, 400);
+
+            VBox prisintervall = new VBox();
+            Label pris = new Label("Prisintervall för receptet");
+            RadioButton nollhundra = new RadioButton("0-100 kr");
+            RadioButton hundratvahundra = new RadioButton("100-200 kr");
+            RadioButton tvahundratrehundra = new RadioButton("200-300 kr");
+            RadioButton trehundrafyrahundra = new RadioButton("300-400 kr");
+            RadioButton fyrahundrafemhundra = new RadioButton("400-500 kr");
+            RadioButton femhundraellermer = new RadioButton("500 kr eller mer");
+            ToggleGroup groupp = new ToggleGroup();
+            nollhundra.setToggleGroup(groupp);
+            hundratvahundra.setToggleGroup(groupp);
+            tvahundratrehundra.setToggleGroup(groupp);
+            trehundrafyrahundra.setToggleGroup(groupp);
+            fyrahundrafemhundra.setToggleGroup(groupp);
+            femhundraellermer.setToggleGroup(groupp);
+            prisintervall.getChildren().addAll(nollhundra, hundratvahundra, tvahundratrehundra, trehundrafyrahundra, fyrahundrafemhundra, femhundraellermer);
+
+            vbox.getChildren().addAll(rubrikRecept, textFieldRubrik, ingredienser, textAreaIngredienser, beskrivning, angeVart, textFieldBeskrivning, pris, prisintervall);
+
+            HBox sparaavbryt = new HBox();
+            sparaavbryt.setSpacing(20);
+            Button spara = new Button("Spara");
+            Button avbryt = new Button("Avbryt");
+            sparaavbryt.getChildren().addAll(spara, avbryt);
+
+            FileChooser fileChooser = new FileChooser();
+
+            Button buttonn = new Button("Välj bild att ladda upp");
+            buttonn.setOnAction(e -> {
+                File selectedFile = fileChooser.showOpenDialog(primaryStage);
+            });
+
+            BorderPane borderPane = new BorderPane();
+            borderPane.setLeft(vbox);
+            borderPane.setBottom(sparaavbryt);
+            borderPane.setTop(buttonn);
+            BorderPane.setAlignment(buttonn, Pos.TOP_CENTER);
+
+            hbox.getChildren().addAll(borderPane, sk);
+            Scene scene = new Scene(hbox, 500, 630);
+            Stage window1 = new Stage();
+            window1.setScene(scene);
+            window1.showAndWait();
+        });
 
         button4.setOnAction(e-> {
             GridPane pane = new GridPane();
@@ -174,8 +248,6 @@ public class ForstaSidaInloggad extends Application {
             });
 
             Scene scene = new Scene(pane, 500, 300);
-            //primaryStage.setScene(scene);
-            //primaryStage.show();
             Stage window = new Stage();
             window.setScene(scene);
             window.showAndWait();
@@ -214,8 +286,6 @@ public class ForstaSidaInloggad extends Application {
         hBox.setLayoutY(150);
         TextField sokRuta = new TextField("Skriv in sökord här...");
         sokRuta.setPrefWidth(350);
-        //sokRuta.setLayoutX(700);
-        //sokRuta.setLayoutY(150);
         hBox.getChildren().add(sokRuta);
 
 
