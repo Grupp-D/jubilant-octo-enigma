@@ -1,5 +1,3 @@
-package laboration1javaFX;
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,11 +12,13 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-import java.awt.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class Registrera extends Application {
 
@@ -27,8 +27,7 @@ public class Registrera extends Application {
     }
 
     @Override
-
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) throws SQLException, ClassNotFoundException {
         primaryStage.setTitle("Registrera konto");
 
         // Create the registration form grid pane
@@ -103,7 +102,7 @@ public class Registrera extends Application {
         return gridPane;
     }
 
-    private void addUIControls(GridPane gridPane) {
+    private void addUIControls(GridPane gridPane) throws SQLException, ClassNotFoundException {
         // Add Header
         javafx.scene.control.Label headerLabel = new javafx.scene.control.Label("Registrera konto");
         //headerLabel.setFont("Arial", FontWeight.BOLD, 24);
@@ -118,12 +117,10 @@ public class Registrera extends Application {
                 // Add Name Label
                 javafx.scene.control.Label nameLabel = new javafx.scene.control.Label("Full Name : ");
                 gridPane.add(nameLabel, 0,1);
-
                 // Add Name Text Field
                 javafx.scene.control.TextField nameField = new javafx.scene.control.TextField();
                 nameField.setPrefHeight(40);
                 gridPane.add(nameField, 1,1);
-
                  */
 
 
@@ -156,24 +153,28 @@ public class Registrera extends Application {
 
 
         submitButton.setOnAction(new EventHandler<ActionEvent>() {
+
+
+
+
             @Override
             public void handle(ActionEvent event) {
+
+
+
                        /* if(nameField.getText().isEmpty()) {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                             alert.setTitle("Meddelande");
                             alert.setHeaderText("Berkäknat värde");
                             alert.showAndWait();
-
                           /*
                             showAlert(Alert);.AlertType.ERROR);//, gridPane.getScene().getWindow(), "Form Error!", "Please enter your name");
                             return;}
-
                            */
 
                 if (emailField.getText().isEmpty()) {
                             /*showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!", "Please enter your email id");
                             return;
-
                              */
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Meddelande");
@@ -193,23 +194,37 @@ public class Registrera extends Application {
                     alert.setHeaderText("Du har inte fyllt i en LNU-Emailadess");
                     alert.showAndWait();
 
-               // } else if (kontroll(passwordField) ==true){
-            }
-                else {Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    // } else if (kontroll(passwordField) ==true){
+                }else {Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Meddelande");
                     alert.setHeaderText("Du har skapat ett konto!");
                     alert.showAndWait();
+
+                try {
+                    Class.forName("com.mysql.jdbc.Driver");
+                } catch (ClassNotFoundException ex) {
+                    System.out.println("Driver not loaded");
+                }
+                try (
+                        Connection conn = DriverManager.getConnection(
+                                "jdbc:mysql://localhost:3306/ffs?useSSL=false",
+                                "root", "123456"
+                        )){
+                    PreparedStatement ReggaKonto= conn.prepareStatement("insert into konto values (?,?)");
+                    ReggaKonto.setString(1, emailField.getText());
+                    ReggaKonto.setString(2, passwordField.getText());
+                    ReggaKonto.executeUpdate();
+
+                }catch (SQLException o) {
+                    o.printStackTrace();
+
+                }
+                emailField.setText("");
+                passwordField.setText("");
+
 
                 }
             }
         });
     }
 }
-
-
-
-
-
-
-
-
