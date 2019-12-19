@@ -1,3 +1,4 @@
+//Nu fungerar avbryt-knapparna på rutorna, så när man klickar på avbryt så stängs pop-up fönstret men förstasidan är kvar.
 package FFS;
 
 import javafx.application.Application;
