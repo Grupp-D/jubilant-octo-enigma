@@ -1,3 +1,5 @@
+//avbryt-knapp stänger nu rutan 
+
 package FFS;
 
 import javafx.application.Application;
