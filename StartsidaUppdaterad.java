@@ -469,11 +469,11 @@ public class StartsidaUppdaterad extends Application {
             HBox hBox = new HBox();
             hBox.setLayoutX(505);
             hBox.setLayoutY(150);
-            TextField sokRuta = new TextField("Skriv in sökord här...");
-            sokRuta.setPrefWidth(350);
+            //TextField sokRuta = new TextField("Skriv in sökord här...");
+         //   sokRuta.setPrefWidth(350);
             //sokRuta.setLayoutX(700);
             //sokRuta.setLayoutY(150);
-            hBox.getChildren().add(sokRuta);
+         //   hBox.getChildren().add(sokRuta);
 
             //nya recept-flödet
             VBox vBox = new VBox();
